@@ -14,9 +14,8 @@ def tag_video(video):
     return video
 
 def run_query(query):
-     #Use a low confidence in order to esure we get a response
     confidence = 0.2
-    support = 10 
+    support = 15
     try:
         annotations = sp.annotate('http://spotlight.dbpedia.org/rest/annotate',query,confidence,support)
     except:

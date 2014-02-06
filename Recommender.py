@@ -14,7 +14,10 @@ from operator import itemgetter
 def calculate_jaccard(profile1,profile2):
     similar = float(len(set(profile1).intersection(set(profile2))))
     together= float(len(set(profile1).union(set(profile2))))
-    return similar/together
+    if together == 0:
+        return 0
+    else:
+        return similar/together
     
     
 def find_related(profile,video_set):
@@ -23,7 +26,7 @@ def find_related(profile,video_set):
     entity_scored_profiles = {}    
     for comparing_profile in video_set:       
         if(profile == comparing_profile):
-            pass
+            continue
         entity_score = calculate_jaccard(profile.entities,comparing_profile.entities)
         entity_scored_profiles[comparing_profile] = entity_score
         #Normally this approach would require stop words but for the sake of the assignment this part is left out
@@ -42,10 +45,9 @@ def find_related(profile,video_set):
     #Return the profile best matching the entities if there is one
     if top_entity_profiles[0][1] > 0.0:
         return_profiles.append(top_entity_profiles[0])
-    else:
-        return_profiles.append(top_score_profiles[2]) 
-    #Add top two profiles from all features
-    return_profiles.append(top_score_profiles[0])
-    return_profiles.append(top_score_profiles[1])
-    return return_profiles
+    for top_profile in top_score_profiles:
+        if len(return_profiles) > 2:
+            return return_profiles
+        elif top_profile not in return_profiles:
+            return_profiles.append(top_profile) 
     

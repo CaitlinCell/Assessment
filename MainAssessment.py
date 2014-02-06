@@ -14,13 +14,13 @@ if __name__ == '__main__':
     with open("output.txt", "wb") as fo:
         for video in video_set:
             fo.write("__________________________________________________\n")
-            related_list = Recommender.find_related(video_set[0],video_set)
+            related_list = Recommender.find_related(video,video_set)
             video.print_video(fo)
             fo.write("\n-------------------------")
             fo.write("\nRelated Videos: ")
             i=0
             for (match,score) in related_list:
                 i += 1
-                fo.write("\n\t"+i+": " )           
+                fo.write("\n\t"+str(i)+": " )           
                 match.print_video(fo)
                 fo.write("\n------------\n")
